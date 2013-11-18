@@ -15,6 +15,15 @@
     <%= f.datetime_field :hour %>
   </div>
   <% session[:restaurant_id]=params[:id].to_i%>
+  </div>
+   <div class="field">
+    <%= f.label :day %><br/>
+    <%= f.text_field :day %>
+  </div>
+   <div class="field">
+    <%= f.label :numberofseats %><br/>
+    <%= f.number_field :numberofseats %>
+  </div>
   <div class="actions"><%= f.submit %></div>
 <% end %>
 

@@ -84,7 +84,20 @@ class UsersController < ApplicationController
     end
   end
   @restaurantsown
-  @restaurants=Restaurant.all
+  @restaurants=[]
+  if @user.reservations!=[]
+    Restaurant.all.each do |rest|
+
+      @user.reservations.each do |rev|
+        @restaurants << rest unless rev.restaurant_id==rest.id
+
+      end
+    end
+  else
+    @restaurants=Restaurant.all
+  end
+
+  @restaurants
   @reservations=@user.reservations
     
 	session[:user_id]=@user.id

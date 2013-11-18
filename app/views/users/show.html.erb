@@ -14,15 +14,17 @@
 <% if current_user.categories.find{|c| c[:text]=="ruser"} %>
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>
-	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> | <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %><br>
+	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> | <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> <br>
+
 	<% end %><br>
-	My Reservatons:
+	
+	My Reservatons: <br>
 	<% @reservations.each do |rev| %>
-	<%= Restaurant.find_by_id(rev.restaurant_id).name %> at <%=rev.hour %><br>
-	<% end %>
+	<%= Restaurant.find_by_id(rev.restaurant_id).name %> on <%=rev.day%> at <%=rev.hour %> for <%=rev.numberofseats%> | <%=link_to "Delete", user_reservation_path(current_user,rev), :confirm => "Delete?", :method => :delete %><br><br>
+	<% end %> 
 
 <% end %>
 
 
-
+<!-- should refactor to only display restaurants that are not in the reservations in controller -->
 

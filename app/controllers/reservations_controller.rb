@@ -32,6 +32,9 @@ class ReservationsController < ApplicationController
 		@res=@user.reservations.build(reservation_params)
 		if @res.save
 			@res.restaurant_id=session[:restaurant_id]
+			@restaurant=Restaurant.find_by_id(@res.restaurant_id)
+			@restaurant.totalsize=@restaurant.totalsize - @res.numberofseats
+			@restaurant.save
 			@res.save
 			session[:restaurant_id]=nil
 
@@ -42,7 +45,11 @@ class ReservationsController < ApplicationController
 	end
 
 	def destroy
-		@res=Reservation.find_by_id(params[:id]).destroy
+		@res=Reservation.find_by_id(params[:id])
+		@restaurant=Restaurant.find_by_id(@res.restaurant_id)
+		@restaurant.totalsize=@restaurant.totalsize+@res.numberofseats
+		@restaurant.save
+		@res.destroy
 		redirect_to user_path(current_user)
 	end
 
@@ -51,7 +58,7 @@ class ReservationsController < ApplicationController
 
 
 	def reservation_params
-    params.require(:reservation).permit(:hour,:user_id,:restaurant_id)
+    params.require(:reservation).permit(:hour,:user_id,:restaurant_id, :day, :numberofseats)
   end
 
 end
