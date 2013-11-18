@@ -57,6 +57,12 @@ class UsersController < ApplicationController
 
    def show
 	@user=User.find(params[:id])
+  @restaurants=[]
+  Restaurant.all.each do |rest|
+    @restaurants << rest if rest.owner.to_i ==current_user.id
+
+  end
+  @restaurants
     
 	session[:user_id]=@user.id
 	end

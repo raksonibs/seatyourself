@@ -1,52 +1,50 @@
 class RestaurantsController < ApplicationController
-	before_filter :load_restuarant
 	def index
-		@restaurants= Resturant.all
+		@restaurants= Restaurant.all
 	end
 
 	def show
-		load_restuarant
+		@res=Restaurant.find_by_id(params[:id])
+
 	end
 
 	def edit
-		load_restuarant
+		@res=Restaurant.find_by_id(params[:id])
 	end
 
 	def new
-		@restuarant=Resturant.new
+		@restaurant=Restaurant.new
 	end
 
 	def update
-		@res=load_restuarant
-		if @res.update_attributes(restuarant_params)
-			redirect_to restuarant_path(@res)
+		@res=Restaurant.find_by_id(params[:id])
+		if @res.update_attributes(restaurant_params)
+			redirect_to restaurant_path(@res)
 		else
 			render 'edit'
 		end
 	end
 
 	def create
-		@res=load_restuarant
+		@res=Restaurant.new(restaurant_params)
 		@res.owner=current_user
 		if @res.save
-			redirect_to restuarant_path
+			redirect_to restaurant_path(@res)
 		else
 			render 'new'
 		end
 	end
 
 	def destroy
-		@res=load_restuarant.destroy
+		@res=load_restaurant.destroy
 		redirect_to user_path(current_user)
 	end
 
 
 	private
-	def load_restuarant
-		@restuarant=Resturant.find[params[:id]] if params[:id]
-	end
 
-	def restuarant_params
-		params.require(:restuarant).permit(:name)
+
+	def restaurant_params
+		params.require(:restaurant).permit(:name)
 	end
 end

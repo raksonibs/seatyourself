@@ -1,0 +1,3 @@
+<%= @res.owner %> <br>
+<%= @res.name %> <br>
+<%= link_to "Your profile", user_path(current_user) %>
