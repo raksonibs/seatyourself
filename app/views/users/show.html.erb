@@ -1,13 +1,13 @@
 <h1><%=current_user.name%></h1>
-<p>You are a <%= current_user.categories.each do |c| %>
-	<%= c.text %> | <br>
+<p>You are an <%= current_user.categories[0..-1].each do |c| %>
+	<%= c.text %> | <br> <%=c %>
 <% end %>
 </p>
 <% if current_user.categories.find{|c| c[:text]=="owner"} %>
 	<p> Add a <%= link_to "restaurant", new_restaurant_path %> </p> 
 	<p> My restuarants </p>
 	<% @restaurants.each do |r| %>
-	<%=r.name %> <br>
+	<%=r.name %> | <%=r.opentime %>-<%= r.closetime %> | <%=r.tablesize %> | <%=r.tables %> |<%= r.address%> <br>
 	<% end %>
 	<% if current_user.categories.find{|c| c[:text]=="ruser"} %>
 	<p> Add reservation </p>

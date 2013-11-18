@@ -1,3 +1,7 @@
 <%= User.find_by_id(@res.owner).name %> <br>
 <%= @res.name %> <br>
+<%=@res.opentime %>-<%= @res.closetime %> <br>
+<%=@res.tablesize %> <br>
+<%=@res.tables %> <br> 
+<%= @res.address%><br>
 <%= link_to "Your profile", user_path(current_user) %>
