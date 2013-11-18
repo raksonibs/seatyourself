@@ -1,17 +1,28 @@
 <h1><%=current_user.name%></h1>
 <p>You are an <%= current_user.categories[0..-1].each do |c| %>
-	<%= c.text %> | <br> <%=c %>
+	<%= c.text %> | <br>
 <% end %>
 </p>
 <% if current_user.categories.find{|c| c[:text]=="owner"} %>
 	<p> Add a <%= link_to "restaurant", new_restaurant_path %> </p> 
 	<p> My restuarants </p>
-	<% @restaurants.each do |r| %>
-	<%=r.name %> | <%=r.opentime %>-<%= r.closetime %> | <%=r.tablesize %> | <%=r.tables %> |<%= r.address%> | <%=link_to "edit this guy", edit_restaurant_path %> | <%=link_to "Delete", restaurant_path(r), :confirm => "Delete?", :method => :delete %><br>
-	<% end %>
-	<% if current_user.categories.find{|c| c[:text]=="ruser"} %>
-	<p> Add reservation </p>
+	<% @restaurantsown.each do |r| %>
+	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Tables size: <%=r.tablesize %> | Num of tables: <%=r.tables %> | Number of seats: <%= r.totalsize %> | <%= r.address%> | <%=link_to "edit this guy", edit_restaurant_path %> | <%=link_to "Delete", restaurant_path(r), :confirm => "Delete?", :method => :delete %><br>
 	<% end %>
 <% end %>
+	<%= current_user.categories.find{|c| c[:text]=="ruser"}  %>
+<% if current_user.categories.find{|c| c[:text]=="ruser"} %>
+	<p> Add reservation to one of the restaurants below: </p>
+	<% @restaurants.each do |r| %>
+	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> | <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %><br>
+	<% end %><br>
+	My Reservatons:
+	<% @reservations.each do |rev| %>
+	<%= Restaurant.find_by_id(rev.restaurant_id).name %> at <%=rev.hour %><br>
+	<% end %>
+
+<% end %>
+
+
 
 

@@ -1,8 +1,27 @@
 class UsersController < ApplicationController
-
+  def index
+    debugger
+  end
   def new
   	@user=User.new
     @categories=@user.categories.new
+  end
+
+  def joinnew
+    @user=current_user
+    @reservation=Reservation.new
+
+    render 'joinnew'
+  end
+
+  def joinncreate
+    @user=User.find_by_id(params[:user_id])
+    @reservation=@user.reservations.build(reservation_params)
+    if @reservation_params.save
+      redirect_to @user
+    else
+      render 'joinnew'
+    end
   end
 
   def create
@@ -57,12 +76,16 @@ class UsersController < ApplicationController
 
    def show
 	@user=User.find(params[:id])
-  @restaurants=[]
-  Restaurant.all.each do |rest|
-    @restaurants << rest if rest.owner.to_i ==current_user.id
+  @restaurantsown=[]
+  if @user.categories.find{|c| c.text=="owner"}
+    Restaurant.all.each do |rest|
+      @restaurantsown << rest if rest.owner.to_i ==current_user.id
 
+    end
   end
-  @restaurants
+  @restaurantsown
+  @restaurants=Restaurant.all
+  @reservations=@user.reservations
     
 	session[:user_id]=@user.id
 	end
@@ -70,5 +93,9 @@ class UsersController < ApplicationController
   private
   def user_params
   	params.require(:user).permit(:email,:password, :password_confirmation, :name)
+  end
+
+  def reservation_params
+    params.require(:reservation).permit(:hour,:user_id,:restaurant_id)
   end
 end

@@ -3,16 +3,19 @@ Seatyourself::Application.routes.draw do
   get "users/edit"
   get "users/show"
   get "welcome_path" => "welcome#index"
+  get '/users/:user_id/join/:id' => "users#joinnew"
   resources :sessions
   root "welcome#index"
   resources :users do
-    resources :categories
+    resources :categories 
     resources :reservations
   end
   resources :restaurants
 
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
   get '/sessions' => 'sessions#create'
+
+  match '/users/:user_id/join/:id', to: "users#joinnew", via: [:get,:post]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

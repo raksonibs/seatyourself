@@ -1,0 +1,21 @@
+<%= form_for [@user,@reservation] do |f| %>
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= Restaurant.find_by_id(params[:id]).name%>
+  <div class="field">
+    <%= f.label :hour %><br/>
+    <%= f.datetime_field :hour %>
+  </div>
+  <% session[:restaurant_id]=params[:id].to_i%>
+  <div class="actions"><%= f.submit %></div>
+<% end %>
+
+<%= link_to "Home", @user %>

@@ -28,6 +28,7 @@ class RestaurantsController < ApplicationController
 	def create
 		@res=Restaurant.new(restaurant_params)
 		@res.owner=current_user
+		@res.totalsize=@res.tablesize*@res.tables
 		if @res.save
 			redirect_to restaurant_path(@res)
 		else
@@ -45,6 +46,6 @@ class RestaurantsController < ApplicationController
 
 
 	def restaurant_params
-		params.require(:restaurant).permit(:name,:opentime,:closetime,:tablesize,:address,:tables)
+		params.require(:restaurant).permit(:name,:opentime,:closetime,:tablesize,:address,:tables,:totalsize)
 	end
 end
