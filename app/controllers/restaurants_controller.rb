@@ -9,7 +9,7 @@ class RestaurantsController < ApplicationController
 	end
 
 	def edit
-		@res=Restaurant.find_by_id(params[:id])
+		@restaurant=Restaurant.find_by_id(params[:id])
 	end
 
 	def new
@@ -17,7 +17,7 @@ class RestaurantsController < ApplicationController
 	end
 
 	def update
-		@res=Restaurant.find_by_id(params[:id])
+		@restaurant=Restaurant.find_by_id(params[:id])
 		if @res.update_attributes(restaurant_params)
 			redirect_to restaurant_path(@res)
 		else
@@ -36,7 +36,7 @@ class RestaurantsController < ApplicationController
 	end
 
 	def destroy
-		@res=load_restaurant.destroy
+		@res=Restaurant.find_by_id(params[:id]).destroy
 		redirect_to user_path(current_user)
 	end
 

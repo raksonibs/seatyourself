@@ -1,0 +1,43 @@
+<%= form_for @restaurant do |f| %>
+  <% if @restaurant.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @restaurant.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <div class="field">
+    <%= f.label :opentime %><br/>
+    <%= f.datetime_field :opentime %>
+  </div>
+  </div>
+  <div class="field">
+    <div class="field">
+    <%= f.label :closetime %><br/>
+    <%= f.datetime_field :closetime %>
+  </div>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br/>
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :tables %><br/>
+    <%= f.text_field :tables %>
+  </div>
+  <div class="field">
+    <%= f.label :tablesize %><br/>
+    <%= f.number_field :tablesize %>
+  </div>
+  <div class="actions"><%= f.submit %></div>
+<% end %>
+
+<%= link_to "Home", user_path(current_user) %>
