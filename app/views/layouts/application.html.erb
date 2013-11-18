@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roommaker</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="user-widget">
+<% if current_user %>
+  Welcome <%= User.find_by_id(current_user).name %> || <%= link_to "Sign out", signout_path, id: "sign_out" %> || <%= link_to "Your Profile", user_path(User.find_by_id(current_user)) %>
+  
+<% else %>
+   <%= link_to "Sign in without Facebook", new_session_path %> || <%= link_to "Sign up without Facebook", new_user_path %>
+<% end %>
+</div>
+<%= yield %>
+
+</body>
+</html>
