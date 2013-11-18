@@ -1,0 +1,5 @@
+want to select when created restaurant what days are avaialbel for that restuarant
+	-need to change form of restuarant creation
+	-need to associate models with date
+restaurant.moments -> Monday: 80, Tueday: 80 when initialize as an owner 
+and then when select date to reserve, from that day do we lose seats

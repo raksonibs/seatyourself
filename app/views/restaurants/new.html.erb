@@ -37,6 +37,10 @@
     <%= f.label :tablesize %><br/>
     <%= f.number_field :tablesize %>
   </div>
+  <div class="field">
+  <%= f.label :moments %><br/>
+  <%= f.select :group, @user.groups.map{|g| [g.name,g.id]} %>
+  </div>
   <div class="actions"><%= f.submit %></div>
 <% end %>
 

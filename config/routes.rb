@@ -10,7 +10,9 @@ Seatyourself::Application.routes.draw do
     resources :categories 
     resources :reservations
   end
-  resources :restaurants
+  resources :restaurants do
+    resources :moments
+  end
 
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
   get '/sessions' => 'sessions#create'
