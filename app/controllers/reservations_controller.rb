@@ -30,18 +30,30 @@ class ReservationsController < ApplicationController
 	def create
 		@user=User.find_by_id(params[:user_id])
 		@res=@user.reservations.build(reservation_params)
-		if @res.save
-			@res.restaurant_id=session[:restaurant_id]
-			@restaurant=Restaurant.find_by_id(@res.restaurant_id)
+		@res.restaurant_id=session[:restaurant_id]
+		@restaurant=Restaurant.find_by_id(@res.restaurant_id)
+		open=@restaurant.opentime.strftime("%H:%M")
+		close=@restaurant.closetime.strftime("%H:%M")
+		range=open..close
+		between=range===@res.hour
+		if between
+			if @res.save
+			
+			
+			
 			@restaurant.totalsize=@restaurant.totalsize - @res.numberofseats
 			@restaurant.save
 			@res.save
 			session[:restaurant_id]=nil
 
 			redirect_to user_path(@user)
-		else
-			render 'new'
 		end
+	else
+		debugger
+		flash[:error]="No submission buddy"
+		redirect_to @user
+		
+	end
 	end
 
 	def destroy
