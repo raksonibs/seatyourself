@@ -7,7 +7,7 @@
 <% @res.moments.each do |day| %>
   <%= day.date %>: <br>
   <%= day.slots.each do |time| %>
-    <%= time.tick %> = <%=time.seats%><br>
+    <%= time.tock.strftime("%H%M") %> = <%=time.seats%><br>
   <% end %><br><br>
 <% end %>
 

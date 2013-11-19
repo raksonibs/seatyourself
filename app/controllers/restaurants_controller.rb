@@ -93,9 +93,11 @@ class RestaurantsController < ApplicationController
 			end
 			times.each do |t|
 				@res.moments.each do |day|
-
-					day.slots << Slot.new({tick:t, seats:@res.totalsize})
 					debugger
+
+					day.slots << Slot.new({tock:t-5.hour, seats:@res.totalsize})
+
+
 				end
 			end
 
