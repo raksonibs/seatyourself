@@ -19,6 +19,8 @@ Seatyourself::Application.routes.draw do
   get '/sessions' => 'sessions#create'
 
   match '/users/:user_id/join/:id', to: "users#joinnew", via: [:get,:post]
+  get '/users/:user_id/:restaurants_id/rate' => "restaurants#rate"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

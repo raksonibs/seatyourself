@@ -11,6 +11,8 @@
 	Dates available: <% r.moments.each do |m| %>
 	                  <%=m.date%> with <%=m.seats%> |||
 	                 <% end %>
+	                <br>
+
 	<% end %>
 <% end %>
 	<%= current_user.categories.find{|c| c[:text]=="ruser"}  %>
@@ -20,7 +22,8 @@
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> <br>
 	Dates available: <% r.moments.each do |m| %>
 	                  <%=m.date%> with <%=m.seats%> |||
-	                 <% end %><br> <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> <br>
+	                 <% end %><br> <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> || <%= link_to "Or rate this place", "/users/#{current_user.id}/#{r.id}/rate" %> <br>
+	                 Rating by <%= r.raters %> customers is: <%=r.rating %> out of a possible 5 <br>
 
 	<% end %><br>
 	

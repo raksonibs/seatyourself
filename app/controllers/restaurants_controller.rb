@@ -16,9 +16,24 @@ class RestaurantsController < ApplicationController
 		@restaurant=Restaurant.new
 	end
 
+	def rate
+		@restaurant=Restaurant.find_by_id(params[:restaurants_id])
+		@rating=@restaurant.rating
+
+	end
+
 	def update
+		ratings= {"Terrible"=>1, "Bad"=>2, "Average"=>3, "Good"=>4,"Great"=>5}
+		rating=params[:restaurant][:rating]
+		value=ratings[rating]
 		@restaurant=Restaurant.find_by_id(params[:id])
+
 		if @restaurant.update_attributes(restaurant_params)
+			@restaurant.raters=@restaurant.raters+1
+			@restaurant.rating=(@restaurant.rating+value).to_f/@restaurant.raters
+			@restaurant.save
+			debugger
+
 			redirect_to restaurant_path(@restaurant)
 		else
 			render 'edit'
@@ -41,10 +56,14 @@ class RestaurantsController < ApplicationController
 
 		if @res.save
 			val.each do |date|
-				debugger
+
 				@res.moments << Moment.new({date:date,
 					                  seats:@res.totalsize})
 			end
+			@res.rating=0
+			@res.raters=0
+			@res.save
+			debugger
 			redirect_to restaurant_path(@res)
 			
 		else
