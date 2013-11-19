@@ -4,4 +4,11 @@
 <%=@res.tablesize %> <br>
 <%=@res.tables %> <br> 
 <%= @res.address%><br>
+<% @res.moments.each do |day| %>
+  <%= day.date %>: <br>
+  <%= day.slots.each do |time| %>
+    <%= time.tick %> = <%=time.seats%><br>
+  <% end %><br><br>
+<% end %>
+
 <%= link_to "Your profile", user_path(current_user) %>

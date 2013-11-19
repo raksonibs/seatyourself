@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131119150725) do
+ActiveRecord::Schema.define(version: 20131119185126) do
 
   create_table "categories", force: true do |t|
     t.datetime "created_at"
@@ -67,6 +67,14 @@ ActiveRecord::Schema.define(version: 20131119150725) do
     t.integer  "totalsize"
     t.integer  "rating"
     t.integer  "raters"
+  end
+
+  create_table "slots", force: true do |t|
+    t.datetime "tick"
+    t.integer  "seats"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "moment_id"
   end
 
   create_table "users", force: true do |t|

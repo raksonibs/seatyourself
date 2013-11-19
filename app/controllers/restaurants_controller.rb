@@ -22,6 +22,25 @@ class RestaurantsController < ApplicationController
 
 	end
 
+	def to_datetime(t)
+    # Convert seconds + microseconds into a fractional number of seconds
+    	
+    	seconds = t.sec
+    	year=t.year
+    	day=t.day
+    	hour=t.hour
+    	min=t.min
+    	month=t.month
+    	offset = Rational(t.utc_offset, 60 * 60 * 24)
+
+
+    # Convert a UTC offset measured in minutes to one measured in a
+    # fraction of a day.
+    	
+    	val=DateTime.new(year, month, day, hour, min, seconds, offset)
+    	val
+  end
+
 	def update
 		ratings= {"Terrible"=>1, "Bad"=>2, "Average"=>3, "Good"=>4,"Great"=>5}
 		rating=params[:restaurant][:rating]
@@ -52,6 +71,18 @@ class RestaurantsController < ApplicationController
 		val<<"Friday" if params[:Friday]
 		val<<"Saturday" if params[:Saturday]
 		val<<"Saturday" if params[:Sunday]
+		open=Time.parse(params[:restaurant][:opentime])#, "%H:%M")
+		close=Time.parse(params[:restaurant][:closetime])#, "%H:%M")
+		range=open..close
+		timerange=Time.parse(params[:restaurant][:opentime])
+		times=[]
+		until timerange>close
+			times << timerange
+			timerange=timerange + 1.hour
+			 
+		end
+
+
 
 
 		if @res.save
@@ -60,10 +91,20 @@ class RestaurantsController < ApplicationController
 				@res.moments << Moment.new({date:date,
 					                  seats:@res.totalsize})
 			end
+			times.each do |t|
+				@res.moments.each do |day|
+
+					day.slots << Slot.new({tick:t, seats:@res.totalsize})
+					debugger
+				end
+			end
+
+
+
+
 			@res.rating=0
 			@res.raters=0
 			@res.save
-			debugger
 			redirect_to restaurant_path(@res)
 			
 		else

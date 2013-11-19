@@ -36,23 +36,23 @@ class ReservationsController < ApplicationController
 		close=@restaurant.closetime.strftime("%H:%M")
 		range=open..close
 		dayon=@restaurant.moments.any?{|c|c.date==params[:reservation][:day]}
-		val=@restaurant.reservations.where(hour: @res.hour) #.sum(:users) + @res.numberofseats 
+		val=@restaurant.reservations.where(hour: @res.hour).where(day: @res.day) #.sum(:users) + @res.numberofseats 
 		@cat=val.sum(:numberofseats) + @res.numberofseats
 
-		dog=@cat < @restaurant.totalsize
+		seatsavail=@cat < @restaurant.totalsize
 		
 		
 
 		between=range===@res.hour
 		if between
-			if dayon
+			if dayon && seatsavail
 				if @res.save
 
 
 			
 			
 			    
-				@restaurant.moments.each do |c|
+				@restaurant.moments.each do |c| #@restaurant.moments.times each do |c| c.seats=c.seats=@res.numberofseats if c.time==params[:reservation][:hour] && c.date==params[:reservation][;day]
 					c.seats=c.seats-@res.numberofseats if c.date==params[:reservation][:day]
 					c.save
 				end
@@ -74,6 +74,7 @@ class ReservationsController < ApplicationController
 	def destroy
 		@res=Reservation.find_by_id(params[:id])
 		@restaurant=Restaurant.find_by_id(@res.restaurant_id)
+		val=@restaurant.reservations.where(hour: @res.hour).where(id: @res.id)
 		@restaurant.totalsize=@restaurant.totalsize+@res.numberofseats
 		@restaurant.save
 		@res.destroy

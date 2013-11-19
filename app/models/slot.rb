@@ -1,9 +1,5 @@
-class Restaurant < ActiveRecord::Base
-	has_many :reservations
-	has_many :users, :through=> :reservations
-	has_many :moments
-	has_many :slots, through: :moments
-
+class Slot < ActiveRecord::Base
+	belongs_to :moment
 	def to_datetime(t)
     # Convert seconds + microseconds into a fractional number of seconds
     	seconds = sec + Rational(t.sec, 10**6)
