@@ -51,7 +51,7 @@ class RestaurantsController < ApplicationController
 			@restaurant.raters=@restaurant.raters+1
 			@restaurant.rating=(@restaurant.rating+value).to_f/@restaurant.raters
 			@restaurant.save
-			debugger
+
 
 			redirect_to restaurant_path(@restaurant)
 		else
@@ -93,7 +93,7 @@ class RestaurantsController < ApplicationController
 			end
 			times.each do |t|
 				@res.moments.each do |day|
-					debugger
+
 
 					day.slots << Slot.new({tock:t-5.hour, seats:@res.totalsize})
 

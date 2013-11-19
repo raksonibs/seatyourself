@@ -101,6 +101,7 @@ class UsersController < ApplicationController
   @reservations=@user.reservations
     
 	session[:user_id]=@user.id
+
 	end
 
   private

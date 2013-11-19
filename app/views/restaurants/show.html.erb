@@ -6,8 +6,8 @@
 <%= @res.address%><br>
 <% @res.moments.each do |day| %>
   <%= day.date %>: <br>
-  <%= day.slots.each do |time| %>
-    <%= time.tock.strftime("%H%M") %> = <%=time.seats%><br>
+  <% day.slots.each do |time| %>
+    <%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
   <% end %><br><br>
 <% end %>
 

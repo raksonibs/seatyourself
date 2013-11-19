@@ -40,10 +40,11 @@ class ReservationsController < ApplicationController
 		@cat=val.sum(:numberofseats) + @res.numberofseats
 
 		seatsavail=@cat < @restaurant.totalsize
-		
-		
 
+		
+		
 		between=range===@res.hour
+
 		if between
 			if dayon && seatsavail
 				if @res.save
@@ -52,30 +53,51 @@ class ReservationsController < ApplicationController
 			
 			
 			    
-				@restaurant.moments.each do |c| #@restaurant.moments.times each do |c| c.seats=c.seats=@res.numberofseats if c.time==params[:reservation][:hour] && c.date==params[:reservation][;day]
-					c.seats=c.seats-@res.numberofseats if c.date==params[:reservation][:day]
-					c.save
-				end
-				@restaurant.save
-				@res.save
-				session[:restaurant_id]=nil
+					@restaurant.moments.each do |day|
+				    	day.slots.each do |slot|
+				    		slot.seats=slot.seats-@res.numberofseats if slot.tock.strftime("%H:%M")==params[:reservation][:hour] && day.date==params[:reservation][:day]
 
-				redirect_to user_path(@user)
+				    		slot.save
+				    		
+				    	end
+					end
+
+
+
+					@restaurant.save
+					@res.save
+					session[:restaurant_id]=nil
+
+
+					
+					redirect_to user_path(@user)
 				end
+
 			end
-	else
+		else
 
 		flash[:error]="No submission buddy"
 		redirect_to @user
 		
-	end
+		end
 	end
 
 	def destroy
 		@res=Reservation.find_by_id(params[:id])
 		@restaurant=Restaurant.find_by_id(@res.restaurant_id)
-		val=@restaurant.reservations.where(hour: @res.hour).where(id: @res.id)
-		@restaurant.totalsize=@restaurant.totalsize+@res.numberofseats
+		seatsback=0
+
+		@restaurant.moments.where(date: @res.day).each do |day|
+
+			day.slots.each do |slot|
+				if slot.tock.strftime("%H:%M")== @res.hour
+					slot.seats=slot.seats+@res.numberofseats 
+					slot.save
+				end
+			end
+		end
+		debugger
+
 		@restaurant.save
 		@res.destroy
 		redirect_to user_path(current_user)

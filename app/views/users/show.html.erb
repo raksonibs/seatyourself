@@ -9,7 +9,10 @@
 	<% @restaurantsown.each do |r| %>
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Tables size: <%=r.tablesize %> | Num of tables: <%=r.tables %> | Number of seats: <%= r.totalsize %> | <%= r.address%> | <%=link_to "edit this guy", edit_restaurant_path %> | <%=link_to "Delete", restaurant_path(r), :confirm => "Delete?", :method => :delete %><br>
 	Dates available: <% r.moments.each do |m| %>
-	                  <%=m.date%> with <%=m.seats%> |||
+	                  <%=m.date%>
+	                 	 <% m.slots.each do |time| %>
+	                 		<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
+	                 	<% end %>
 	                 <% end %>
 	                <br>
 
@@ -20,12 +23,21 @@
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> <br>
-	Dates available: <% r.moments.each do |m| %>
-	                  <%=m.date%> with <%=m.seats%> |||
-	                 <% end %><br> <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> || <%= link_to "Or rate this place", "/users/#{current_user.id}/#{r.id}/rate" %> <br>
-	                 Rating by <%= r.raters %> customers is: <%=r.rating %> out of a possible 5 <br>
+	Dates available: 
+		<% r.moments.each do |m| %>
+	        <%=m.date%><br>
 
-	<% end %><br>
+  			<% m.slots.each do |time| %>
+    			<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
+  			<% end %><br><br>
+		<% end %>
+		<%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> || <%= link_to "Or rate this place", "/users/#{current_user.id}/#{r.id}/rate" %> <br>
+
+	Rating by <%= r.raters %> customers is: <%=r.rating %> out of a possible 5 <br>
+	<% end %><br> 
+	
+
+
 	
 	My Reservatons: <br>
 	<% @reservations.each do |rev| %>
