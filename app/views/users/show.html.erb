@@ -1,5 +1,5 @@
 <h1><%=current_user.name%></h1>
-<p>You are an <%= current_user.categories[0..-1].each do |c| %>
+<p>You are an <% current_user.categories[0..-1].each do |c| %>
 	<%= c.text %> | <br>
 <% end %>
 </p>
