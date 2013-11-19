@@ -42,6 +42,13 @@
 	My Reservatons: <br>
 	<% @reservations.each do |rev| %>
 	<%= Restaurant.find_by_id(rev.restaurant_id).name %> on <%=rev.day%> at <%=rev.hour %> for <%=rev.numberofseats%> | <%=link_to "Delete", user_reservation_path(current_user,rev), :confirm => "Delete?", :method => :delete %><br><br>
+	<% Restaurant.find_by_id(rev.restaurant_id).moments.each do |m| %>
+	        <%=m.date%><br>
+
+  			<% m.slots.each do |time| %>
+    			<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
+  			<% end %><br><br>
+		<% end %>
 	<% end %> 
 
 <% end %>

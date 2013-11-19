@@ -38,15 +38,25 @@ class ReservationsController < ApplicationController
 		dayon=@restaurant.moments.any?{|c|c.date==params[:reservation][:day]}
 		val=@restaurant.reservations.where(hour: @res.hour).where(day: @res.day) #.sum(:users) + @res.numberofseats 
 		@cat=val.sum(:numberofseats) + @res.numberofseats
+		total=0
 
-		seatsavail=@cat < @restaurant.totalsize
+		@restaurant.moments.each do |m|
+
+  			m.slots.each do |time|
+
+    			total=total+time.seats if (time.tock.strftime("%H:%M")==params[:reservation][:hour] && m.date==params[:reservation][:day])
+    		end
+    	end
+
+		seatsavail=@cat < total
+
 
 		
 		
 		between=range===@res.hour
 
-		if between
-			if dayon && seatsavail
+		if between && seatsavail
+			if dayon 
 				if @res.save
 
 
@@ -96,7 +106,6 @@ class ReservationsController < ApplicationController
 				end
 			end
 		end
-		debugger
 
 		@restaurant.save
 		@res.destroy
