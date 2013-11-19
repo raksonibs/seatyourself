@@ -38,8 +38,22 @@
     <%= f.number_field :tablesize %>
   </div>
   <div class="field">
-  <%= f.label :moments %><br/>
-  <%= f.select :group, @user.groups.map{|g| [g.name,g.id]} %>
+  <p> Days open: </p>
+
+  <%= check_box_tag(:Monday) %>
+  <%= label_tag(:Monday, "Monday") %>
+  <%= check_box_tag(:Tuesday) %>
+  <%= label_tag(:Tuesday, "Tuesday") %>
+  <%= check_box_tag(:Wednesday) %>
+  <%= label_tag(:Wednesday, "Wednesday") %>
+  <%= check_box_tag(:Thursday) %>
+  <%= label_tag(:Thursday, "Thursday") %>
+  <%= check_box_tag(:Friday) %>
+  <%= label_tag(:Friday, "Friday") %>
+  <%= check_box_tag(:Saturday) %>
+  <%= label_tag(:Saturday, "Saturday") %>
+  <%= check_box_tag(:Sunday) %>
+  <%= label_tag(:Sunday, "Sunday") %>
   </div>
   <div class="actions"><%= f.submit %></div>
 <% end %>

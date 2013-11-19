@@ -8,13 +8,19 @@
 	<p> My restuarants </p>
 	<% @restaurantsown.each do |r| %>
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Tables size: <%=r.tablesize %> | Num of tables: <%=r.tables %> | Number of seats: <%= r.totalsize %> | <%= r.address%> | <%=link_to "edit this guy", edit_restaurant_path %> | <%=link_to "Delete", restaurant_path(r), :confirm => "Delete?", :method => :delete %><br>
+	Dates available: <% r.moments.each do |m| %>
+	                  <%=m.date%> with <%=m.seats%> |||
+	                 <% end %>
 	<% end %>
 <% end %>
 	<%= current_user.categories.find{|c| c[:text]=="ruser"}  %>
 <% if current_user.categories.find{|c| c[:text]=="ruser"} %>
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>
-	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> | <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> <br>
+	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> <br>
+	Dates available: <% r.moments.each do |m| %>
+	                  <%=m.date%> with <%=m.seats%> |||
+	                 <% end %><br> <%= link_to "Make a reservation", "/users/#{current_user.id}/join/#{r.id}" %> <br>
 
 	<% end %><br>
 	
