@@ -36,6 +36,11 @@ class ReservationsController < ApplicationController
 		close=@restaurant.closetime.strftime("%H:%M")
 		range=open..close
 		dayon=@restaurant.moments.any?{|c|c.date==params[:reservation][:day]}
+		val=@restaurant.reservations.where(hour: @res.hour) #.sum(:users) + @res.numberofseats 
+		@cat=val.sum(:numberofseats) + @res.numberofseats
+
+		dog=@cat < @restaurant.totalsize
+		
 		
 
 		between=range===@res.hour

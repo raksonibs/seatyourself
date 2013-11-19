@@ -13,3 +13,9 @@ then rating system for each restuarant.
 then online ordering
 then geographic location near you #maybe not because did last time
 then make look nice!
+
+validate that time reservation has a cpacity, and the next hour si free (everoyne leaves at that time) restaurant.reservations.where(start_time: reservation.start_time).sum(:people)
+
+
+@reservation
+if restaurant.reservations.where(starttime: @reservation.starttime).sum(:users) + @reservation.numberofseats > @restaurant.totalsize
