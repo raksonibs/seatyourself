@@ -13,6 +13,7 @@ Seatyourself::Application.routes.draw do
   resources :restaurants do
     resources :moments
   end
+  resources :menus
 
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
   get '/sessions' => 'sessions#create'
