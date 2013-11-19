@@ -3,3 +3,7 @@ want to select when created restaurant what days are avaialbel for that restuara
 	-need to associate models with date
 restaurant.moments -> Monday: 80, Tueday: 80 when initialize as an owner 
 and then when select date to reserve, from that day do we lose seats
+
+need to add the restaurants sorted by categories! - restuarant has many catoegires and categories belong to res
+order online! -need very simple menu
+search for restaurant based on geographic location!
