@@ -35,21 +35,31 @@ class ReservationsController < ApplicationController
 		open=@restaurant.opentime.strftime("%H:%M")
 		close=@restaurant.closetime.strftime("%H:%M")
 		range=open..close
+		dayon=@restaurant.moments.any?{|c|c.date==params[:reservation][:day]}
+		
+
 		between=range===@res.hour
 		if between
-			if @res.save
-			
-			
-			
-			@restaurant.totalsize=@restaurant.totalsize - @res.numberofseats
-			@restaurant.save
-			@res.save
-			session[:restaurant_id]=nil
+			if dayon
+				if @res.save
 
-			redirect_to user_path(@user)
-		end
+
+			
+			
+			    
+				@restaurant.moments.each do |c|
+					c.seats=c.seats-@res.numberofseats if c.date==params[:reservation][:day]
+					c.save
+				end
+				@restaurant.save
+				@res.save
+				session[:restaurant_id]=nil
+
+				redirect_to user_path(@user)
+				end
+			end
 	else
-		debugger
+
 		flash[:error]="No submission buddy"
 		redirect_to @user
 		
