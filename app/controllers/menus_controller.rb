@@ -6,7 +6,13 @@ class MenusController < ApplicationController
 	end
 
 	def show
-		@menu=Menu.find_by_id(params[:id])
+
+		if params[:id]
+			@menu=Menu.find_by_id(params[:id])
+		elsif
+			@menu=Menu.find_by_id(params[:menu_id])
+		end
+
 		@rest=Restaurant.find_by_id(params[:restaurant_id])
 	end
 

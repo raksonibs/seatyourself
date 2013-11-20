@@ -2,23 +2,34 @@
 <%=@rest.name%>: <br>
 Menu: <br>
 <h6><%=@menu.season%></h6>
-<% @menu.items.each do |item| %>
+
+  <% if current_user.categories.find{|c| c[:text]=="owner"} %>
+  <% @menu.items.each do |item| %>
   <%= item.product %> <br>
   <%= item.desc %> <br>
   <%= item.price %> <br>
-  <% if current_user.categories.find{|c| c[:text]=="owner"} %>
 
   	<%= link_to "Delete item", menu_item_path(@menu,item), :confirm => "Delete?", :method => :delete %> <br>
-  	<%=link_to "New Item", new_menu_item_path(@menu) %><br><br>
+  	<% end %>
+  	<% end %>
+  	 <% if current_user.categories.find{|c| c[:text]=="owner"} %>
+  	<br><%=link_to "New Item", new_menu_item_path(@menu) %><br><br>
   	<%= link_to "Back to Restaurant", @rest %>
+  	<% end %>
   
-  <% end %>
+
+  
   <% if current_user.categories.find{|c| c[:text]=="ruser"} %>
+  <% @menu.items.each do |item| %>
+  <%= item.product %> <br>
+  <%= item.desc %> <br>
+  <%= item.price %> <br>
   	<%= link_to "Order", "/users/#{current_user.id}/#{@rest.id}/#{@menu.id}/#{item.id}" %> <br>
 
   <% end %>
+  <% end %>
   
 
-<% end %>
+
 
 <%= link_to "Home", current_user %>

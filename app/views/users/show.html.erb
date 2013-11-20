@@ -16,6 +16,9 @@
 	Total seats: <%= r.totalsize %> <br>
 	Address: <%= r.address%> <br> 
 	<%= link_to "New Menu", new_restaurant_menu_path(r) %><br>
+	<p> Menus: <% r.menus.each do |menu| %>
+		          <%=link_to "#{menu.season}", restaurant_menu_path(r,menu) %>
+		        <% end %></p>
 	
 	<%= link_to "Time slots available for reservation", "/users/#{r.id}/time" %><br>
 	<%= link_to "Reservations", "/users/#{r.id}/reserve" %><br>
@@ -33,7 +36,7 @@
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> <br>
-	<%= link_to "Menu - Order Online",  %><br>
+	<%= link_to "Menu - Order Online", "/restaurants/#{r.id}/#{r.menus.last.id}" unless r.menus.last==nil%><br>
 
 	Dates available: 
 		<% r.moments.each do |m| %>
