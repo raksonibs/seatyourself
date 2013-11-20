@@ -1,5 +1,5 @@
 <br>
-<%=@rest.name%>: <br>
+<%=Restaurant.find_by_id(@menu.restaurant_id).name%>: <br>
 Menu: <br>
 <h6><%=@menu.season%></h6>
 
@@ -27,9 +27,13 @@ Menu: <br>
   	<%= link_to "Order", "/users/#{current_user.id}/#{@rest.id}/#{@menu.id}/#{item.id}" %> <br>
 
   <% end %>
+  <br>
+  <p>Your current order: <% @order.items.each do |item| %>
+  	                      <%= item.product %> | Price: <%= item.price %> | Quantity: <%= item.quantity %>
+  	                     <% end %>
   <% end %>
   
 
 
-
+<br>
 <%= link_to "Home", current_user %>

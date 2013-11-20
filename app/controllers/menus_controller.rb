@@ -13,7 +13,13 @@ class MenusController < ApplicationController
 			@menu=Menu.find_by_id(params[:menu_id])
 		end
 
-		@rest=Restaurant.find_by_id(params[:restaurant_id])
+		@rest=Restaurant.find_by_id(@menu.restaurant_id)
+		@user=User.find_by_id(current_user)
+		if @menu.orders!=[]
+			@order=@menu.orders.where(user_id: current_user.id)[0]
+
+			
+		end
 	end
 
 	def edit
