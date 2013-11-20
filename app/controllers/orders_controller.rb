@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
 		@order.items.each do |item|
 			item.quantity=item.quantity-1 if @item.id==item.id
 			item.save
-			item.destroy if item.quantity==0
+			@order.items.delete(item) if item.quantity<=0
 			item.save
 		end
 		redirect_to restaurant_menu_path(@rest,@menu)
