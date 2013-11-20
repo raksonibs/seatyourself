@@ -18,15 +18,28 @@ class OrdersController < ApplicationController
 		@item.quantity=@item.quantity+1
 		@item.save
 
-		debugger
 		if @order.save
 			@order.items << @item
 			@order.save
-			debugger
 			redirect_to restaurant_menu_path(@rest,@menu)
 		else
 			redirect_to @menu
 		end
+	end
+
+	def remove
+		@menu=Menu.find_by_id(params[:menu_id])
+		@order=Order.find_by_id(params[:order_id])
+		@item=Item.find_by_id(params[:id])
+		@rest=Restaurant.find_by_id(params[:restaurant_id])
+		@order.items.each do |item|
+			item.quantity=item.quantity-1 if @item.id==item.id
+			item.save
+			item.destroy if item.quantity==0
+			item.save
+		end
+		redirect_to restaurant_menu_path(@rest,@menu)
+
 	end
 	private
 

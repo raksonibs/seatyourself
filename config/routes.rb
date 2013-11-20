@@ -27,6 +27,7 @@ Seatyourself::Application.routes.draw do
   get "/users/:id/reserve" => "restaurants#reserve"
   get "/users/:user_id/:restaurant_id/:menu_id/:item_id" => "orders#create"
   get "/restaurants/:restaurant_id/:menu_id"=> "menus#show"
+  get "/remove/:restaurant_id/:menu_id/:order_id/:id" => "orders#remove"
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

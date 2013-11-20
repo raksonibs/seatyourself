@@ -28,12 +28,12 @@ Menu: <br>
 
   <% end %>
   <br>
-  <p>Your current order: <% @order.items.each do |item| %>
-  	                      <%= item.product %> | Price: <%= item.price %> | Quantity: <%= item.quantity %>
-  	                     <% end %>
+  <p>Your current order:<div> <% @order.items.each do |item| %>
+  	                      <%= item.product %> | Price: <%= item.price %> | Quantity: <%= item.quantity %> <%= link_to "Remove item", "/remove/#{@menu.restaurant_id}/#{@menu.id}/#{@order.id}/#{item.id}" %><br>
+  	                     </div><% end %>
   <% end %>
   
 
 
 <br>
-<%= link_to "Home", current_user %>
+<div><%= link_to "Home", current_user %></div>
