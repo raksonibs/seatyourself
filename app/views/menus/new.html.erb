@@ -1,0 +1,19 @@
+<%= form_for [@rest,@menu] do |f| %>
+  <% if @menu.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @menu.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :season %><br/>
+    <%= f.text_field :season %>
+  </div>
+  <div class="actions"><%= f.submit %></div>
+<% end %>
+
+<%= link_to "Home", @rest %>

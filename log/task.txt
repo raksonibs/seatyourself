@@ -10,7 +10,7 @@ search for restaurant based on geographic location!
 
 make nice. so first menu with items.
 then rating system for each restuarant.
-then online ordering
+then online ordering - menu with products and click for that product how many you want. going to need to have order whic is quantity and product_id
 then geographic location near you #maybe not because did last time
 then make look nice!
 

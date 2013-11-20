@@ -14,6 +14,9 @@ class UsersController < ApplicationController
     render 'joinnew'
   end
 
+  def order
+  end
+
   def joinncreate
     @user=User.find_by_id(params[:user_id])
     @reservation=@user.reservations.build(reservation_params)

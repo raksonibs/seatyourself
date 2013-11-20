@@ -1,0 +1,27 @@
+<%= form_for [@menu, @item] do |f| %>
+  <% if @item.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @item.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :product %><br/>
+    <%= f.text_field :product %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br/>
+    <%= f.text_field :desc %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br/>
+    <%= f.number_field :price %>
+  </div>
+  <div class="actions"><%= f.submit %></div>
+<% end %>
+
+<%= link_to "Home", @rest %>

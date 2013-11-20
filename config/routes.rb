@@ -12,8 +12,11 @@ Seatyourself::Application.routes.draw do
   end
   resources :restaurants do
     resources :moments
+    resources :menus
   end
-  resources :menus
+  resources :menus do
+    resources :items
+  end
 
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
   get '/sessions' => 'sessions#create'
@@ -22,6 +25,7 @@ Seatyourself::Application.routes.draw do
   get '/users/:user_id/:restaurants_id/rate' => "restaurants#rate"
   get "/users/:id/time" => "restaurants#index"
   get "/users/:id/reserve" => "restaurants#reserve"
+  get "/users/:user_id/:restaurant_id/:menu_id/:item_id" => "orders#create"
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

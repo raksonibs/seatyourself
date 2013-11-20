@@ -10,11 +10,13 @@
 
  	<ul class="large-block-grid-3"><% @restaurantsown.each do |r| %>
  		<li><h5><%=r.name %></h5>
-  		Hours of Operation: <%=r.opentime.strftime("%H:%M") %>-----<%= r.closetime.strftime("%H:%M") %> <br>
+  		Hours of Operation: <%=r.opentime.strftime("%H:%M") %>-<%= r.closetime.strftime("%H:%M") %> <br>
 	Tables size: <%=r.tablesize %> <br>
 	Number of tables: <%=r.tables %> <br>
 	Total seats: <%= r.totalsize %> <br>
 	Address: <%= r.address%> <br> 
+	<%= link_to "New Menu", new_restaurant_menu_path(r) %><br>
+	
 	<%= link_to "Time slots available for reservation", "/users/#{r.id}/time" %><br>
 	<%= link_to "Reservations", "/users/#{r.id}/reserve" %><br>
 	<%=link_to "Edit Restaurant", edit_restaurant_path(r) %> | <%=link_to "Delete Restaurant", restaurant_path(r), :confirm => "Delete?", :method => :delete %></li>
@@ -31,9 +33,13 @@
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>
 	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Number of seats: <%=r.totalsize %> | <%= r.address%> <br>
+	<%= link_to "Menu - Order Online",  %><br>
+
 	Dates available: 
 		<% r.moments.each do |m| %>
 	        <%=m.date%><br>
+
+	        
 
   			<% m.slots.each do |time| %>
     			<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>

@@ -1,0 +1,7 @@
+<br>
+<%=@menu.name%>: <br>
+Menu: <br>
+<h6><%=@item.desc%></h6>
+<%=link_to "New Item", new_menu_item_path(@menu) %><br><br>
+
+<%= link_to "Back to Menu", @menu %>
