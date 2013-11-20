@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
 	def index
-		@restaurants= Restaurant.all
+		@restaurant= Restaurant.find_by_id(params[:id])
 	end
 
 	def show
@@ -10,6 +10,12 @@ class RestaurantsController < ApplicationController
 
 	def edit
 		@restaurant=Restaurant.find_by_id(params[:id])
+	end
+
+	def reserve
+		@restaurant=Restaurant.find_by_id(params[:id])
+		@reservations=@restaurant.reservations
+
 	end
 
 	def new
@@ -48,8 +54,10 @@ class RestaurantsController < ApplicationController
 		@restaurant=Restaurant.find_by_id(params[:id])
 
 		if @restaurant.update_attributes(restaurant_params)
-			@restaurant.raters=@restaurant.raters+1
-			@restaurant.rating=(@restaurant.rating+value).to_f/@restaurant.raters
+			unless value==nil
+				@restaurant.raters=@restaurant.raters+1
+				@restaurant.rating=(@restaurant.rating+value).to_f/@restaurant.raters
+			end
 			@restaurant.save
 
 

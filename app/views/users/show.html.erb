@@ -1,24 +1,32 @@
 <h1><%=current_user.name%></h1>
 <p>You are an <% current_user.categories[0..-1].each do |c| %>
-	<%= c.text %> | <br>
+	<%= c.text %> <br>
 <% end %>
 </p>
 <% if current_user.categories.find{|c| c[:text]=="owner"} %>
-	<p> Add a <%= link_to "restaurant", new_restaurant_path %> </p> 
-	<p> My restuarants </p>
-	<% @restaurantsown.each do |r| %>
-	<%=r.name %> | <%=r.opentime %>-----<%= r.closetime %> | Tables size: <%=r.tablesize %> | Num of tables: <%=r.tables %> | Number of seats: <%= r.totalsize %> | <%= r.address%> | <%=link_to "edit this guy", edit_restaurant_path %> | <%=link_to "Delete", restaurant_path(r), :confirm => "Delete?", :method => :delete %><br>
-	Dates available: <% r.moments.each do |m| %>
-	                  <%=m.date%>
-	                 	 <% m.slots.each do |time| %>
-	                 		<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
-	                 	<% end %>
-	                 <% end %>
-	                <br>
 
+	<h2> My restaurants </h2>
+	
+
+ 	<ul class="large-block-grid-3"><% @restaurantsown.each do |r| %>
+ 		<li><h5><%=r.name %></h5>
+  		Hours of Operation: <%=r.opentime.strftime("%H:%M") %>-----<%= r.closetime.strftime("%H:%M") %> <br>
+	Tables size: <%=r.tablesize %> <br>
+	Number of tables: <%=r.tables %> <br>
+	Total seats: <%= r.totalsize %> <br>
+	Address: <%= r.address%> <br> 
+	<%= link_to "Time slots available for reservation", "/users/#{r.id}/time" %><br>
+	<%= link_to "Reservations", "/users/#{r.id}/reserve" %><br>
+	<%=link_to "Edit Restaurant", edit_restaurant_path(r) %> | <%=link_to "Delete Restaurant", restaurant_path(r), :confirm => "Delete?", :method => :delete %></li>
 	<% end %>
+	<li> <p> <%= link_to "Add a new restaurant", new_restaurant_path, class: "button radius" %> </p> </li>
+	</ul>
+
+ 
+	
 <% end %>
-	<%= current_user.categories.find{|c| c[:text]=="ruser"}  %>
+
+	
 <% if current_user.categories.find{|c| c[:text]=="ruser"} %>
 	<p> Add reservation to one of the restaurants below: </p>
 	<% @restaurants.each do |r| %>

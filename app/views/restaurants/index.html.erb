@@ -1,0 +1,6 @@
+<% @restaurant.moments.each do |m| %>
+	                  <br><%=m.date%><br>
+	                 	 <% m.slots.each do |time| %>
+	                 		<%= time.tock.strftime("%H:%M") %> = <%=time.seats%><br>
+	                 	<% end %>
+	                 <% end %>

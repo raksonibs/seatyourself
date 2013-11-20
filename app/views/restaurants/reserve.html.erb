@@ -1,0 +1,8 @@
+<br>
+Reservations for <%= @restaurant.name %>: <br>
+<% @reservations.each do |c| %>
+  
+  For <%= c.day %> at <%= c.hour %> <br>
+  Number of seats <%= c.numberofseats %> <br>
+  Reserved by <%=User.find_by_id(c.user_id).name %><br>
+<% end %>

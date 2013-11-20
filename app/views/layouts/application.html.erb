@@ -14,7 +14,7 @@
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  	<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+  	<title><%= content_for?(:title) ? yield(:title) : "SuperSeat" %></title>
 
   	<%= stylesheet_link_tag    "application" %>
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
@@ -22,6 +22,8 @@
   </head>
 
   <body>
+    <div class="large-12 large-centered columns">
+
     <% if current_user %>
   Welcome <%= User.find_by_id(current_user).name %> || <%= link_to "Sign out", signout_path, id: "sign_out" %> || <%= link_to "Your Profile", user_path(User.find_by_id(current_user)) %> || 
   
@@ -34,5 +36,6 @@
 
     
     <%= javascript_include_tag "application" %>
+  </div>
   </body>
 </html>
